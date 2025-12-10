@@ -12,9 +12,6 @@ A Retrieval-Augmented Generation (RAG) system that allows you to query IPCC AR6 
 # Install Ollama (https://ollama.ai/)
 ```
 
-
-### Install Ollama Models
-
 ### Pull required models
 ```
 ollama pull nomic-embed-text:latest
