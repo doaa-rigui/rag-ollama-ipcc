@@ -1,4 +1,3 @@
-# app.py
 from fastapi import FastAPI
 from pydantic import BaseModel
 import requests
@@ -19,7 +18,6 @@ retriever = vectordb.as_retriever(search_type="similarity", search_kwargs={"k": 
 
 print("✓ Vector DB Loaded")
 
-# --- SIMPLE OLLAMA CALL ---
 def call_ollama(prompt: str, model: str = "gemma2:2b"):
     try:
         r = requests.post(
@@ -38,7 +36,6 @@ def call_ollama(prompt: str, model: str = "gemma2:2b"):
         return f"[Ollama Error] {str(e)}"
 
 
-# --- MODELS ---
 class QueryIn(BaseModel):
     question: str
 
@@ -50,11 +47,9 @@ def root():
 def ask(q: QueryIn):
     print(f"Question: {q.question}")
 
-    # Step 1: Retrieve documents
     docs = retriever.invoke(q.question)
     context = "\n\n".join([doc.page_content for doc in docs])
 
-    # Step 2: Build prompt
     prompt = f"""
 Use the following context to answer the question.
 If the answer is not in the context, say "I don't know."
@@ -67,10 +62,8 @@ Question: {q.question}
 Answer:
 """
 
-    # Step 3: Call Ollama directly (no LCEL)
     answer = call_ollama(prompt)
 
-    # Step 4: Return answer + source previews
     sources = [
         {
             "content": doc.page_content[:200] + "...",

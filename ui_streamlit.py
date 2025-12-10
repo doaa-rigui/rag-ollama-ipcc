@@ -7,10 +7,8 @@ st.set_page_config(page_title="IPCC RAG Demo", page_icon="🌍", layout="wide")
 st.title("🌍 RAG Demo - IPCC AR6 Climate Reports")
 st.markdown("Ask questions about climate change based on IPCC AR6 reports")
 
-# API endpoint
 API_URL = "http://localhost:8000/ask"
 
-# Create two columns
 col1, col2 = st.columns([2, 1])
 
 with col1:
@@ -32,7 +30,6 @@ with col2:
     - What mitigation strategies does IPCC recommend?
     """)
 
-# Process the question when button is clicked
 if ask_button and question:
     with st.spinner("🤔 Thinking..."):
         try:
@@ -45,11 +42,9 @@ if ask_button and question:
             if response.ok:
                 data = response.json()
                 
-                # Display answer
                 st.subheader("📝 Answer")
                 st.write(data["answer"])
                 
-                # Display sources
                 st.subheader("📚 Sources")
                 sources = data.get("sources", [])
                 
@@ -95,7 +90,6 @@ with st.sidebar:
     
     st.header("🔧 Status")
     
-    # Check API health
     try:
         health = requests.get("http://localhost:8000/", timeout=2)
         if health.ok:

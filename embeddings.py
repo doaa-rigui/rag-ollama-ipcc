@@ -1,4 +1,3 @@
-# app.py
 from fastapi import FastAPI
 from pydantic import BaseModel
 from langchain_ollama import ChatOllama, OllamaEmbeddings
@@ -8,7 +7,6 @@ from langchain.prompts import PromptTemplate
 
 app = FastAPI()
 
-# Load vector DB and set up retriever
 print("Loading vector database...")
 embedding_fn = OllamaEmbeddings(
     model="nomic-embed-text:latest",
@@ -26,9 +24,8 @@ retriever = vectordb.as_retriever(
 )
 
 print("Initializing LLM...")
-# LLM - using a more common model name
 llm = ChatOllama(
-    model="llama3.1",  # or "llama3.2" depending on what you have installed
+    model="llama3.1",  
     temperature=0.0,
     base_url="http://localhost:11434"
 )
@@ -41,7 +38,6 @@ prompt = PromptTemplate.from_template(
     "Answer:"
 )
 
-# Create RAG chain
 qa = RetrievalQA.from_chain_type(
     llm=llm,
     chain_type="stuff",
@@ -75,11 +71,10 @@ def ask(q: QueryIn):
         print(f"\nReceived question: {q.question}")
         result = qa({"query": q.question})
         
-        # Extract sources with metadata
         sources = []
         for doc in result.get("source_documents", []):
             sources.append({
-                "content": doc.page_content[:200] + "...",  # First 200 chars
+                "content": doc.page_content[:200] + "...",  
                 "metadata": doc.metadata
             })
         

@@ -1,4 +1,3 @@
-# ingest.py
 from langchain_community.document_loaders import UnstructuredPDFLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 import os
@@ -27,10 +26,8 @@ def load_and_split(pdf_path, chunk_size=1000, chunk_overlap=200):
 def main():
     """Process all PDFs in the data/ directory"""
     
-    # Create output directory
     os.makedirs("chunks", exist_ok=True)
     
-    # Find all PDF files
     pdf_files = glob.glob("data/*.pdf")
     
     if not pdf_files:
@@ -40,15 +37,12 @@ def main():
     
     print(f"Found {len(pdf_files)} PDF file(s) to process\n")
     
-    # Process each PDF
     for pdf_path in pdf_files:
         print(f"Processing: {pdf_path}")
         
         try:
-            # Load and split the PDF
             docs = load_and_split(pdf_path)
             
-            # Convert to JSON-serializable format
             output = [
                 {
                     "page_content": doc.page_content,
@@ -57,7 +51,6 @@ def main():
                 for doc in docs
             ]
             
-            # Save to JSON file
             output_filename = os.path.join(
                 "chunks",
                 os.path.basename(pdf_path) + ".json"
