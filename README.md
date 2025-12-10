@@ -5,7 +5,7 @@ A Retrieval-Augmented Generation (RAG) system that allows you to query IPCC AR6 
 
 ## 🚀 Quick Start
 
-### 1. Prerequisites
+### Prerequisites
 
 ```bash
 # Install Python 3.8+ and pip
@@ -13,14 +13,14 @@ A Retrieval-Augmented Generation (RAG) system that allows you to query IPCC AR6 
 ```
 
 
-### 2. Install Ollama Models
+### Install Ollama Models
 
-# Pull required models
+### Pull required models
 ```
 ollama pull nomic-embed-text:latest
 ollama pull gemma2:2b
 ```
-### 3. Setup Python Environment
+### Setup Python Environment
 
 1. Install dependencies
 `pip install -r requirements.txt`
@@ -28,14 +28,14 @@ ollama pull gemma2:2b
 `mkdir -p data`
 3. Add your PDF files to the `data/` directory
 
-### 5. Run the Pipeline
+### Run the Pipeline
 
 1. Ingest Documents `python ingest.py`. This processes PDFs in data/ and saves chunks to chunks/.
 2. Create Vector Database `python embeddings.py`. This loads documents and creates the vector database in vectordb/.
 3. Start the Backend `uvicorn app:app --reload --port 8000`
 4. Launch Web Interface `streamlit run ui_streamlit.py`
 
-## 🛠️ Configuration
+## Configuration
 
 ### Models
 - **Embedding**: `nomic-embed-text:latest`
